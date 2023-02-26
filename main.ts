@@ -51,7 +51,6 @@ forever(function () {
         animation.stopAnimation(animation.AnimationTypes.All, mySprite)
     }
     if (mySprite.vx > 0) {
-        console.log("awling right")
         animation.setAction(mySprite, ActionKind.WlakRight)
         goingRight = true
     }
