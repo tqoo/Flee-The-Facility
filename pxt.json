@@ -1,5 +1,5 @@
 {
-    "name": "Gaming",
+    "name": "Flee The Facility",
     "description": "",
     "dependencies": {
         "device": "*",
@@ -24,7 +24,7 @@
         "test.ts"
     ],
     "targetVersions": {
-        "target": "1.12.22",
+        "target": "1.12.24",
         "targetId": "arcade"
     },
     "supportedTargets": [

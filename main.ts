@@ -18,6 +18,9 @@ function InitwalkLeft () {
     walkrightanim.addAnimationFrame(assets.image`PlayerWalk`)
     animation.attachAnimation(mySprite, walkrightanim)
 }
+function upDownAnim () {
+	
+}
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.tileKindAt(TileDirection.Top, assets.tile`dungeonBook`)) {
         game.showLongText("It's a book. \\n Or is it a journal?", DialogLayout.Bottom)
@@ -28,6 +31,17 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         if (game.ask("Read the memo?")) {
             game.showLongText(`"Adam, we just finished putting in those tiles you ordered, and they SUCK. They're so fragile that that... thing could easily just slip through and escape. We're gonna put in the flooring anyways, but when that thing ecapes, dont say I didn't warn you. 
  Kind regards, Joe Hills."`, DialogLayout.Bottom)
+        }
+    }
+    if (mySprite.tileKindAt(TileDirection.Center, assets.tile`trapCracked`)) {
+        game.showLongText("There's a cracked tile underneath you. \\n If you jump on it, it could break?", DialogLayout.Bottom)
+        if (game.ask("Step on the tile?")) {
+            for (let index = 0; index < 3; index++) {
+                mySprite.vy += -12.5
+                mySprite.ay = 25
+                pauseUntil(() => mySprite.tileKindAt(TileDirection.Center, assets.tile`trapCracked`))
+                mySprite.ay = 0
+            }
         }
     }
 })
@@ -54,10 +68,12 @@ forever(function () {
         animation.setAction(mySprite, ActionKind.WlakRight)
         goingRight = true
     }
-    if (mySprite.vy != 0 && goingRight) {
-        animation.setAction(mySprite, ActionKind.WlakRight)
+    if (mySprite.vy < 0) {
+        animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+        mySprite.setImage(assets.image`playerbackwalkidle`)
     }
-    if (mySprite.vy != 0 && !(goingRight)) {
-        animation.setAction(mySprite, ActionKind.Walking)
+    if (mySprite.vy > 0) {
+        animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+        mySprite.setImage(assets.image`playerfrontwalkidle`)
     }
 })
