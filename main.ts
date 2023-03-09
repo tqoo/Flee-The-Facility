@@ -2,7 +2,9 @@ enum ActionKind {
     Walking,
     Idle,
     Jumping,
-    WlakRight
+    WlakRight,
+    WalkUp,
+    WalkDown
 }
 function InitwalkLeft () {
     walkleftanim = animation.createAnimation(ActionKind.Walking, 100)
@@ -18,8 +20,34 @@ function InitwalkLeft () {
     walkrightanim.addAnimationFrame(assets.image`PlayerWalk`)
     animation.attachAnimation(mySprite, walkrightanim)
 }
-function upDownAnim () {
-	
+function animatePlayer () {
+    if (mySprite.vx < 0) {
+        animation.setAction(mySprite, ActionKind.Walking)
+        goingRight = false
+    }
+    if (mySprite.vx == 0 && mySprite.vy == 0) {
+        animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+    }
+    if (mySprite.vx > 0) {
+        animation.setAction(mySprite, ActionKind.WlakRight)
+        goingRight = true
+    }
+    if (mySprite.vy < 0) {
+        animation.setAction(mySprite, ActionKind.WalkUp)
+    }
+    if (mySprite.vy > 0) {
+        animation.setAction(mySprite, ActionKind.WalkDown)
+    }
+}
+function initVertAnim () {
+    walkUpAnim = animation.createAnimation(ActionKind.WalkUp, 100)
+    walkUpAnim.addAnimationFrame(assets.image`playerbackwalk0`)
+    walkUpAnim.addAnimationFrame(assets.image`playerbackwalk1`)
+    animation.attachAnimation(mySprite, walkUpAnim)
+    walkDownAnim = animation.createAnimation(ActionKind.WalkDown, 100)
+    walkDownAnim.addAnimationFrame(assets.image`playerfrontwalk1`)
+    walkDownAnim.addAnimationFrame(assets.image`playerfrontwalk0`)
+    animation.attachAnimation(mySprite, walkDownAnim)
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.tileKindAt(TileDirection.Top, assets.tile`dungeonBook`)) {
@@ -45,35 +73,21 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         }
     }
 })
+let walkDownAnim: animation.Animation = null
+let walkUpAnim: animation.Animation = null
 let walkrightanim: animation.Animation = null
 let imgwalkleft: Image = null
 let imgstilleft: Image = null
 let walkleftanim: animation.Animation = null
 let mySprite: Sprite = null
 let goingRight = false
+goingRight = false
 tiles.setCurrentTilemap(tilemap`level`)
 mySprite = sprites.create(assets.image`PlayerIdle`, SpriteKind.Player)
 controller.moveSprite(mySprite, 100, 100)
 scene.cameraFollowSprite(mySprite)
 InitwalkLeft()
+initVertAnim()
 forever(function () {
-    if (mySprite.vx < 0) {
-        animation.setAction(mySprite, ActionKind.Walking)
-        goingRight = false
-    }
-    if (mySprite.vx == 0 && mySprite.vy == 0) {
-        animation.stopAnimation(animation.AnimationTypes.All, mySprite)
-    }
-    if (mySprite.vx > 0) {
-        animation.setAction(mySprite, ActionKind.WlakRight)
-        goingRight = true
-    }
-    if (mySprite.vy < 0) {
-        animation.stopAnimation(animation.AnimationTypes.All, mySprite)
-        mySprite.setImage(assets.image`playerbackwalkidle`)
-    }
-    if (mySprite.vy > 0) {
-        animation.stopAnimation(animation.AnimationTypes.All, mySprite)
-        mySprite.setImage(assets.image`playerfrontwalkidle`)
-    }
+    animatePlayer()
 })
