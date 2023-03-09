@@ -45,8 +45,8 @@ function initVertAnim () {
     walkUpAnim.addAnimationFrame(assets.image`playerbackwalk1`)
     animation.attachAnimation(mySprite, walkUpAnim)
     walkDownAnim = animation.createAnimation(ActionKind.WalkDown, 100)
-    walkDownAnim.addAnimationFrame(assets.image`playerfrontwalk1`)
     walkDownAnim.addAnimationFrame(assets.image`playerfrontwalk0`)
+    walkDownAnim.addAnimationFrame(assets.image`playerfrontwalk1`)
     animation.attachAnimation(mySprite, walkDownAnim)
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
