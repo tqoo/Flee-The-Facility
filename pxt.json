@@ -7,7 +7,8 @@
         "animation": "*",
         "arcade-text": "github:microsoft/arcade-text#v1.3.0",
         "arcade-tile-util": "github:microsoft/arcade-tile-util#v1.0.1",
-        "color-coded-tilemap": "*"
+        "color-coded-tilemap": "*",
+        "Color Fading": "github:jwunderl/pxt-color#v0.2.2"
     },
     "files": [
         "main.blocks",
@@ -24,7 +25,7 @@
         "test.ts"
     ],
     "targetVersions": {
-        "target": "1.12.24",
+        "target": "1.12.26",
         "targetId": "arcade"
     },
     "supportedTargets": [

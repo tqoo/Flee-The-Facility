@@ -44,6 +44,11 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "PlayerWalk"
     },
+    "!6JkpUd": {
+        "data": "hwQQABAAAAAAAAD//w8AAAAA8J+Z/w8AAADwmZmZ/wAAAPCZmZn5AAAA/5mfmfkAAPCfmZmZmQ8A8JmZmZmZDwDwmZmZmZn/APCfmZmZmfkAAJ+Zn5mZmQAAn5mZmZn/AAD/mZmZ+Q8AAPCZmZn/AAAA8JmZmQ8AAADwn5n5AAAAAAD///8AAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Blob"
+    },
     "anim1": {
         "namespace": "myAnimations",
         "id": "anim1",
