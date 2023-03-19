@@ -97,12 +97,39 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy_Blob, function (sprite, ot
     FIGHT(otherSprite)
 })
 function FIGHT (enemy: Sprite) {
+    scene.setBackgroundImage(assets.image`fightbg`)
+    tileUtil.unloadTilemap()
     scene.centerCameraAt(0, 0)
-    tiles.setCurrentTilemap(tilemap`fightScene`)
     for (let value of enemies) {
         sprites.destroy(value)
     }
+    controller.moveSprite(mySprite, 0, 0)
+    myMenu = miniMenu.createMenu(
+    miniMenu.createMenuItem("Attack"),
+    miniMenu.createMenuItem("Item"),
+    miniMenu.createMenuItem("Run"),
+    miniMenu.createMenuItem("4th Option")
+    )
+    myMenu.setPosition(-78, 35)
+    myMenu.setDimensions(158, 25)
+    myMenu.setMenuStyleProperty(miniMenu.MenuStyleProperty.Columns, 2)
+    myMenu.setMenuStyleProperty(miniMenu.MenuStyleProperty.Rows, 2)
+    myMenu.setMenuStyleProperty(miniMenu.MenuStyleProperty.UseAsTemplate, 1)
+    myMenu.onButtonPressed(controller.A, function (selection, selectedIndex) {
+        if (selection == "Attack") {
+            myMenu.close()
+            AttackMenu = miniMenu.createMenu(
+            miniMenu.createMenuItem("Attack1"),
+            miniMenu.createMenuItem("Attack2"),
+            miniMenu.createMenuItem("Attack3"),
+            miniMenu.createMenuItem("Attack4")
+            )
+            AttackMenu.setPosition(-78, 35)
+        }
+    })
 }
+let AttackMenu: miniMenu.MenuSprite = null
+let myMenu: miniMenu.MenuSprite = null
 let enemies: Sprite[] = []
 let walkDownAnim: animation.Animation = null
 let walkUpAnim: animation.Animation = null
