@@ -97,6 +97,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy_Blob, function (sprite, ot
     FIGHT(otherSprite)
 })
 function FIGHT (enemy: Sprite) {
+    fighting = true
     scene.setBackgroundImage(assets.image`fightbg`)
     tileUtil.unloadTilemap()
     scene.centerCameraAt(0, 0)
@@ -139,10 +140,12 @@ let imgstilleft: Image = null
 let walkleftanim: animation.Animation = null
 let mySprite: Sprite = null
 let goingRight = false
+let fighting = false
 let level = 0
 tiles.setCurrentTilemap(tilemap`level2`)
 level = 2
 let levels = [tilemap`level`, tilemap`level2`]
+fighting = false
 goingRight = false
 mySprite = sprites.create(assets.image`PlayerIdle`, SpriteKind.Player)
 controller.moveSprite(mySprite, 100, 100)
@@ -154,17 +157,19 @@ forever(function () {
     animatePlayer()
 })
 game.onUpdateInterval(500, function () {
-    for (let value of enemies) {
-        if (Math.percentChance(50)) {
-            if (Math.percentChance(50)) {
-                value.vx = 50
-            } else {
-                value.vx = -50
-            }
-            if (Math.percentChance(50)) {
-                value.vy = 50
-            } else {
-                value.vy = -50
+    if (!(fighting)) {
+        for (let value of enemies) {
+            if (Math.percentChance(50) || value.tileKindAt(TileDirection.Center, assets.tile`officeWallTile`)) {
+                if (Math.percentChance(50)) {
+                    value.vx = 50
+                } else {
+                    value.vx = -50
+                }
+                if (Math.percentChance(50)) {
+                    value.vy = 50
+                } else {
+                    value.vy = -50
+                }
             }
         }
     }
